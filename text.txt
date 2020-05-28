@@ -1,0 +1,2 @@
+1|Laptop Hp Pavilion|12000000|HP|10|hasdasdaszx  jasdh iuhq qwid qsidnqs|/Products/image-1.png
+2|Laptop Asus Pavilion|12100000|ASus|10|hasdasdaszx  jasdh iuhq qwid qsidnqs|/Products/image-2.png

@@ -1,0 +1,13 @@
+{
+  "name": "Chat",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "*",
+    "mongoose": "^5.9.15",
+    "mysql": "^2.17.1",
+    "socket.io": "*",
+    "socketio-file-upload": "^0.4.4"
+  }
+}
