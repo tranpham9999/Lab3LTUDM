@@ -65,6 +65,10 @@ module.exports = (app) => {
     //Bài 3: ///////////////////////////////////////////////////////////////////
     app.post('/bai3', (req, res) => {
 
+
+       
+
+
         //Set storage engine
         const storage = multer.diskStorage({
             destination: './public/uploads/',
@@ -88,35 +92,45 @@ module.exports = (app) => {
             if(err){
                 console.log('Error!!!');
             }else{
-                if(req.file ==)
+                if(req.file == undefined){
+                    //No file select
+
+                }else{
+                    //File upload
+
+                    const product = new Product({
+                        Title: req.body.title,
+                        Summary: req.body.summary,
+                        ImageUrl: req.body.imageUrl,
+                        price: req.body.price,
+                        Number: req.body.number
+                    });
+
+                    product
+                    .save()
+                    .then(result => {
+                        console.log(result);
+                        res.status(201).json({
+                            message: "Handling POST requests to create Product!",
+                            createProduct: result,
+                            file: `uploads/${req.file.filename}`
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            error: err
+                        });
+                    });
+
+                }
             }
         })
         
 
 
-        const product = new Product({
-            Title: req.body.title,
-            Summary: req.body.summary,
-            ImageUrl: req.body.imageUrl,
-            price: req.body.price,
-            Number: req.body.number
-        });
-
-        product
-        .save()
-        .then(result => {
-            console.log(result);
-            res.status(201).json({
-                message: "Handling POST requests to create Product!",
-                createProduct: result
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
+       
+        
         
     });
     app.get('/bai3', (req, res) => {
