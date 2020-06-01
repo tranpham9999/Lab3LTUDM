@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const multer = require('multer');
+const ejs = require('ejs');
+const path = require('path');
 const mongoose = require("mongoose");
 const {mongoUrl} = require('./config/mongoUrl');
 
@@ -61,6 +64,36 @@ module.exports = (app) => {
     });
     //Bài 3: ///////////////////////////////////////////////////////////////////
     app.post('/bai3', (req, res) => {
+
+        //Set storage engine
+        const storage = multer.diskStorage({
+            destination: './public/uploads/',
+            filename: function(req, file, cb){
+                cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+            }
+        });
+
+        //Init upload
+        const upload = multer({
+            storage: storage, 
+            limits: {
+                fieldSize: 1000000
+            },
+            fileFilter: function(req, file, cb){
+                checkFileType(file, cb);
+            }
+        }).single('myImage')
+
+        upload(req, res, (err)=>{
+            if(err){
+                console.log('Error!!!');
+            }else{
+                if(req.file ==)
+            }
+        })
+        
+
+
         const product = new Product({
             Title: req.body.title,
             Summary: req.body.summary,
@@ -98,7 +131,7 @@ module.exports = (app) => {
             console.log(err);
             res.status(500).json({
                 error: err
-            })
+            })  
         });
         
     });
@@ -142,4 +175,16 @@ module.exports = (app) => {
             });
         });
     });
+
+    function checkFileType(file, cb){
+        const fileTypes = /jpeg|jpg|png|gif/;
+        const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+        const mimetype = fileTypes.test(file.mimetype);
+
+        if( mimetype && extname){
+            return cb(null, true);
+        }else{
+            cb('Error: Image Only!');
+        }
+    }
 }
